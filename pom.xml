@@ -67,6 +67,21 @@
             <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Jstl taglib hw01 -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <!-- Tags for DateTime api <javatime> -->
+        <dependency>
+            <groupId>net.sargue</groupId>
+            <artifactId>java-time-jsptags</artifactId>
+            <version>1.1.4</version>
+        </dependency>
+
     </dependencies>
 
     <profiles>
