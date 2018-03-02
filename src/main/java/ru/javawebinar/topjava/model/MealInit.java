@@ -2,9 +2,9 @@ package ru.javawebinar.topjava.model;
 
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 //Инициализация списка еды для HW01
 public class MealInit {
@@ -13,7 +13,7 @@ public class MealInit {
         return mealList;
     }
 
-    private volatile List<Meal> mealList = new ArrayList<Meal>();
+    private List<Meal> mealList = new CopyOnWriteArrayList<Meal>();//потокобезопасно
 
     public MealInit() {
         mealList = Arrays.asList(

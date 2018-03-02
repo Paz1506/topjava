@@ -3,12 +3,9 @@ package ru.javawebinar.topjava.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 public class Meal {
     private final LocalDateTime dateTime;
-
-    private final String formatedDate;
 
     private final String description;
 
@@ -18,7 +15,6 @@ public class Meal {
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
-        this.formatedDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(dateTime);
     }
 
     public LocalDateTime getDateTime() {
@@ -39,9 +35,5 @@ public class Meal {
 
     public LocalTime getTime() {
         return dateTime.toLocalTime();
-    }
-
-    public String getFormatedDate() {
-        return formatedDate;
     }
 }

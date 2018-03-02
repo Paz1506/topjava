@@ -24,18 +24,10 @@ public class MealServlet extends HttpServlet {
         //Получаем список еды со значением exceed, без фильтрации
         List<MealWithExceed> mealWithExceeds = MealsUtil.getFilteredWithExceeded(new MealInit().getMealList(), LocalTime.MIN, LocalTime.MAX, 2000);
 
-        /*System.out.println("TYT!");
-        System.out.println(mealWithExceeds);*/
-
         //Кладем список в запрос
         request.setAttribute("mylist", mealWithExceeds);
 
         log.debug("forwarding to meals");
         request.getRequestDispatcher("/meals.jsp").forward(request, response);
-
-        //log.debug("redirect to meals");
-
-//        request.getRequestDispatcher("/users.jsp").forward(request, response);
-        //response.sendRedirect("meals.jsp");
     }
 }

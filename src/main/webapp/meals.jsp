@@ -20,13 +20,8 @@
     <tbody>
 
     <c:forEach items="${requestScope.get('mylist')}" var="listMeals">
-        <c:if test="${listMeals.exceed}">
-            <tr style="background-color: crimson">
-        </c:if>
-        <c:if test="${!listMeals.exceed}">
-            <tr style="background-color: #00ab14">
-        </c:if>
-            <td>${listMeals.formatedDate}</td>
+        <tr style="background-color: ${listMeals.exceed ? '#d63104' : '#00ab14'}">
+            <td><javatime:parseLocalDateTime value="${listMeals.dateTime}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDate"/><javatime:format value="${parsedDate}" style="MS"/></td>
             <td>${listMeals.description}</td>
             <td>${listMeals.calories}</td>
         </tr>
