@@ -71,6 +71,8 @@ public class MealServlet extends HttpServlet {
         //удаление
         if (request.getParameter("delete") != null && Boolean.valueOf(request.getParameter("delete"))) {
             mealDao.delete(Integer.parseInt(request.getParameter("id")));
+            response.sendRedirect("meals");
+            return;
         }
 
         //редактирование
