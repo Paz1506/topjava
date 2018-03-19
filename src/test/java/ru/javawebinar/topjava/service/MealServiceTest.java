@@ -12,11 +12,9 @@ import ru.javawebinar.topjava.model.Meal;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
 import static ru.javawebinar.topjava.MealTestData.*;
 
 @ContextConfiguration({
@@ -60,7 +58,7 @@ public class MealServiceTest {
     @Test
     public void getBetweenDateTimes() throws Exception {
         assertMatch(service.getBetweenDateTimes(LocalDateTime.of(2016, 3, 18, 12, 8, 22),
-                LocalDateTime.of(2016, 3, 18, 12, 8, 25),100000),firstMeal);
+                LocalDateTime.of(2016, 3, 18, 12, 8, 25), 100000), firstMeal);
     }
 
     @Test
