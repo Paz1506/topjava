@@ -29,7 +29,7 @@ public class MealTestData {
     }
 
     public static void assertMatch(Iterable<Meal> actual, Iterable<Meal> expected) {
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields("datetime").isEqualTo(expected);
     }
 
     public static void assertMatch(Meal actual, Meal expected) {
