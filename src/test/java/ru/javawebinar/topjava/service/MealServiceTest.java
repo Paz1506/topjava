@@ -1,7 +1,12 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.Test;
+import org.junit.*;
+import org.junit.rules.ExpectedException;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
+import org.junit.runners.model.Statement;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -10,13 +15,20 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 
+import static org.junit.Assert.fail;
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
+import static ru.javawebinar.topjava.UserTestData.USER;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
 @ContextConfiguration({
@@ -35,6 +47,31 @@ public class MealServiceTest {
     @Autowired
     private MealService service;
 
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
+
+    private static List<String> summary = new ArrayList<>();
+
+    @Rule
+    public final TestWatcher watcher = new TestWatcher() {
+
+        LocalDateTime starttime;
+
+        @Override
+        protected void starting(Description description) {
+            //super.starting(description);
+            starttime = LocalDateTime.now();
+        }
+
+        @Override
+        protected void finished(Description description) {
+            String curSummary = "|||TEST NAME: " + description.getMethodName() + "||| TIME COMPLETE: " + Duration.between(starttime, LocalDateTime.now()).toMillis();
+            summary.add(curSummary);
+            System.out.println(curSummary);
+        }
+
+    };
+
     @Test
     public void delete() throws Exception {
         service.delete(MEAL1_ID, USER_ID);
@@ -49,6 +86,7 @@ public class MealServiceTest {
     @Test
     public void save() throws Exception {
         Meal created = getCreated();
+        created.setUser(USER);
         service.create(created, USER_ID);
         assertMatch(service.getAll(USER_ID), created, MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
     }
@@ -67,18 +105,21 @@ public class MealServiceTest {
     @Test
     public void update() throws Exception {
         Meal updated = getUpdated();
+        updated.setUser(USER);
         service.update(updated, USER_ID);
         assertMatch(service.get(MEAL1_ID, USER_ID), updated);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test()
     public void updateNotFound() throws Exception {
+        thrown.expect(NotFoundException.class);
+        MEAL1.setUser(USER);
         service.update(MEAL1, ADMIN_ID);
     }
 
     @Test
     public void getAll() throws Exception {
-        assertMatch(service.getAll(USER_ID), MEALS);
+        assertMatch(MEALS, service.getAll(USER_ID));
     }
 
     @Test
@@ -86,5 +127,13 @@ public class MealServiceTest {
         assertMatch(service.getBetweenDates(
                 LocalDate.of(2015, Month.MAY, 30),
                 LocalDate.of(2015, Month.MAY, 30), USER_ID), MEAL3, MEAL2, MEAL1);
+    }
+
+    //Optional 3.3
+    @AfterClass
+    public static void succeeds() {
+        for (String testInfo : summary){
+            System.out.println(testInfo);
+        }
     }
 }
