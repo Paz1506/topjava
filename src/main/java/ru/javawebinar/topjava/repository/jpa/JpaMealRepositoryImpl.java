@@ -2,6 +2,7 @@ package ru.javawebinar.topjava.repository.jpa;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
@@ -23,7 +24,8 @@ public class JpaMealRepositoryImpl implements MealRepository {
     @Transactional
     public Meal save(Meal meal, int userId) {
         //п. 1 Подсказки по HW4
-        if (meal.getUser().getId()!=userId) throw new NotFoundException(this.getClass().getName()+" : save - another user");//for update not found (MealService test)
+        //if (meal.getUser().getId()!=userId) throw new NotFoundException(this.getClass().getName()+" : save - another user");//for update not found (MealService test)
+        if (AuthorizedUser.id() != userId)  throw new NotFoundException(this.getClass().getName()+" : save - another user");
         User ref = em.getReference(User.class, userId);
         meal.setUser(ref);
         if (meal.isNew()) {

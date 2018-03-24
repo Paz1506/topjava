@@ -113,7 +113,6 @@ public class MealServiceTest {
     @Test()
     public void updateNotFound() throws Exception {
         thrown.expect(NotFoundException.class);
-        MEAL1.setUser(USER);
         service.update(MEAL1, ADMIN_ID);
     }
 
