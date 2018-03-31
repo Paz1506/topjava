@@ -57,6 +57,9 @@
                 <version>2.21.0</version>
                 <configuration>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
+                    <!-- п. 4 Домашнего задания-->
+                    <!--https://stackoverflow.com/questions/9320620/junit-maven-error-occured-in-starting-fork-check-output-in-log-->
+                    <forkCount>0</forkCount>
                 </configuration>
             </plugin>
         </plugins>
