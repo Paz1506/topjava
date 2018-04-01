@@ -19,8 +19,10 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.topjava.ActiveDbProfileResolver;
+import ru.javawebinar.topjava.UserTestData;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.repository.datajpa.CrudUserRepository;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.util.Collections;
@@ -75,6 +77,10 @@ public abstract class AbstractUserServiceTest {
 
     @Autowired
     private UserService service;
+
+    //Optional 7.1
+    @Autowired
+    protected CrudUserRepository repository;
 
     @Autowired
     private CacheManager cacheManager;
