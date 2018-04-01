@@ -16,7 +16,6 @@ public class MealServiceTest extends AbstractMealServiceTest {
         Meal test = super.repository.getByIdWithUser(MealTestData.MEAL1_ID);
         Meal userMeal = MealTestData.MEAL1;
         userMeal.setUser(UserTestData.USER);
-        System.out.println();
         MealTestData.assertMatchWithUser(userMeal, test);
     }
 }

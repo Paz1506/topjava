@@ -29,9 +29,9 @@ public class MealServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         // Ensure that properties from other tests aren't set
-        //System.setProperty("spring.profiles.active", "postgres,datajpa");//1
+        System.setProperty("spring.profiles.active", "hsqldb,jdbc");//1
         springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
-        springContext.getEnvironment().setActiveProfiles("postgres","datajpa");//2
+        //springContext.getEnvironment().setActiveProfiles("postgres","datajpa");//2
         mealController = springContext.getBean(MealRestController.class);
     }
 
