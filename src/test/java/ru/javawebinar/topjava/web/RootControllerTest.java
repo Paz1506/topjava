@@ -26,4 +26,20 @@ public class RootControllerTest extends AbstractControllerTest {
                         )
                 )));
     }
+
+    //HW07 1.1 (Test for JSP)
+    @Test
+    public void testMeals() throws Exception {
+        mockMvc.perform(get("/meals"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("meals"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/meals.jsp"))
+                .andExpect(model().attribute("meals", hasSize(6)))
+                .andExpect(model().attribute("meals", hasItem(
+                        allOf(
+                                hasProperty("id", is(100002))//начиная с 100002
+//                                hasProperty("name", is(USER.getName()))
+                        )
+                )));
+    }
 }
