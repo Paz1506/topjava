@@ -14,16 +14,16 @@ import java.util.List;
 @RequestMapping(MealRestController.REST_URL)
 public class MealRestController extends AbstractMealController {
 
-    static final String REST_URL = "rest/meals";
+    static final String REST_URL = "/rest/meals";
 
     @GetMapping(value = "/{meal_id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Meal get(@PathVariable("meal_id") int id) {
         return super.get(id);
     }
 
-    @DeleteMapping
+    @DeleteMapping(value = "/{meal_id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void delete(int id) {
+    public void delete(@PathVariable("meal_id") int id) {
         super.delete(id);
     }
 
