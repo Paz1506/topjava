@@ -12,7 +12,7 @@
 <section>
     <h3><spring:message code="meal.title"/></h3>
 
-    <form method="post" action="meals/filter">
+    <form id="filterForm" method="post" action="meals/filter">
         <dl>
             <dt><spring:message code="meal.startDate"/>:</dt>
             <dd><input type="date" name="startDate" value="${param.startDate}"></dd>
@@ -29,10 +29,18 @@
             <dt><spring:message code="meal.endTime"/>:</dt>
             <dd><input type="time" name="endTime" value="${param.endTime}"></dd>
         </dl>
-        <button type="submit"><spring:message code="meal.filter"/></button>
+        <%--<button type="submit"><spring:message code="meal.filter"/></button>--%>
+        <button class="btn btn-success" onclick="filterMeal()">
+            <span class="fa fa-filter"></span>
+            <spring:message code="meal.filter"/>
+        </button>
+        <button class="btn btn-warning" onclick="resetFilter()">
+            <span class="fa fa-times"></span>
+            <spring:message code="meal.clean_filter"/>
+        </button>
     </form>
     <hr>
-    <a href="meals/create"><spring:message code="meal.add"/></a>
+    <%--<a href="meals/create"><spring:message code="meal.add"/></a>--%>
 
     <button class="btn btn-primary" onclick="addMeal()">
         <span class="fa fa-plus"></span>
