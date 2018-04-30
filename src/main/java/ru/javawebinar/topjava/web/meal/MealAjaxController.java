@@ -59,5 +59,4 @@ public class MealAjaxController extends AbstractMealController{
         System.out.println("!!!!!!!!!!!!!!!!!!ОТРАБОТАЛ БИТВИН!!!!!!!!!!!!!!!!!!!!");
         return super.getBetween(startDate, startTime, endDate, endTime);
     }
-
 }

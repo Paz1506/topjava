@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
@@ -48,7 +49,7 @@ public class UserServiceImpl implements UserService {
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 
-    @Cacheable("users")
+    @Cacheable("users") //Проблема в кэше!
     @Override
     public List<User> getAll() {
         return repository.getAll();
@@ -64,5 +65,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getWithMeals(int id) {
         return checkNotFoundWithId(repository.getWithMeals(id), id);
+    }
+
+    @Override
+    @Transactional
+    @CacheEvict(value = "users", allEntries = true) //Иначе не обновляется enabled
+    public User updateEnabled(Integer id, boolean enabled) {
+        System.out.println("ENABLED!!! " + enabled);
+        User user = repository.get(id);
+        user.setEnabled(enabled);
+        repository.save(user);
+        return user;
     }
 }
