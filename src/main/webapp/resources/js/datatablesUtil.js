@@ -46,6 +46,7 @@ function save() {
         url: ajaxUrl,
         data: form.serialize()
     }).done(function () {
+        alert("Успешно!");
         $("#editRow").modal("hide");
         updateTable();
         successNoty("common.saved");
