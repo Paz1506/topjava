@@ -59,4 +59,43 @@ $(function () {
         "initComplete": makeEditable
     });
     makeEditable();
+
+    //$.datetimepicker.setLocale(localeCode);
+
+//  http://xdsoft.net/jqplugins/datetimepicker/
+    var startDate = $('#startDate');
+    var endDate = $('#endDate');
+    startDate.datetimepicker({
+        timepicker: false,
+        format: 'Y-m-d',
+        // formatDate: 'Y-m-d',
+        // onShow: function (ct) {
+        //     this.setOptions({
+        //         maxDate: endDate.val() ? endDate.val() : false
+        //     })
+        // }
+    });
+    endDate.datetimepicker({
+        timepicker: false,
+        format: 'Y-m-d'
+        // formatDate: 'Y-m-d',
+        // onShow: function (ct) {
+        //     this.setOptions({
+        //         minDate: startDate.val() ? startDate.val() : false
+        //     })
+        // }
+    });
+
+    $('#startTime, #endTime').datetimepicker({
+        datepicker: false,
+        format: 'H:i'
+    });
+
+    //Разобраться с форматом
+    $('#dateTime').datetimepicker({
+        //format: 'Y-m-d H:i'
+        format:      'Y-m-d\\TH:i:s'
+        // formatTime:  'HH:mm',
+        // formatDate:  'YYYY-MM-DD'
+    });
 });
