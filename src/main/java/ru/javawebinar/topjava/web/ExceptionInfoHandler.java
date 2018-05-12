@@ -7,6 +7,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import ru.javawebinar.topjava.util.exception.IllegalRequestDataException;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 
 import static ru.javawebinar.topjava.util.exception.ErrorType.*;
 
@@ -31,7 +33,7 @@ public class ExceptionInfoHandler {
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(NotFoundException.class)
     public ErrorInfo handleError(HttpServletRequest req, NotFoundException e) {
-        return logAndGetErrorInfo(req, e, false, DATA_NOT_FOUND);
+        return logAndGetErrorInfo(req, e, true, DATA_NOT_FOUND);
     }
 
     @ResponseStatus(value = HttpStatus.CONFLICT)  // 409
@@ -40,10 +42,11 @@ public class ExceptionInfoHandler {
         return logAndGetErrorInfo(req, e, true, DATA_ERROR);
     }
 
+    //10.1 TransactionSystemException.class,
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)  // 422
-    @ExceptionHandler({IllegalRequestDataException.class, MethodArgumentTypeMismatchException.class, HttpMessageNotReadableException.class})
+    @ExceptionHandler({TransactionSystemException.class, IllegalRequestDataException.class, MethodArgumentTypeMismatchException.class, HttpMessageNotReadableException.class})
     public ErrorInfo illegalRequestDataError(HttpServletRequest req, Exception e) {
-        return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR);
+        return logAndGetErrorInfo(req, e, true, VALIDATION_ERROR);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
