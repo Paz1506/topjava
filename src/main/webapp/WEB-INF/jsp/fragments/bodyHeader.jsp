@@ -17,5 +17,14 @@
                 </button>
             </sec:authorize>
         </form:form>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <spring:message code="locale.menus"/>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <a class="dropdown-item" href="?lang=en">en</a>
+                <a class="dropdown-item" href="?lang=ru">ru</a>
+            </div>
+        </div>
     </div>
 </nav>

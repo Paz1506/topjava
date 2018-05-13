@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.transaction.TransactionSystemException;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -21,7 +22,6 @@ import ru.javawebinar.topjava.util.exception.IllegalRequestDataException;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolationException;
 
 import static ru.javawebinar.topjava.util.exception.ErrorType.*;
 
@@ -40,6 +40,11 @@ public class ExceptionInfoHandler {
     @ResponseStatus(value = HttpStatus.CONFLICT)  // 409
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
+        //if (ValidationUtil.getErrorResponse())
+//        if (result.hasErrors()){
+//            return new ErrorInfo("", DATA_ERROR, "Duplicate email");
+//        }
+//        return new ErrorInfo("", DATA_ERROR, "Duplicate email");
         return logAndGetErrorInfo(req, e, true, DATA_ERROR);
     }
 

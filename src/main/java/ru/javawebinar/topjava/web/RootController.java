@@ -13,12 +13,13 @@ import ru.javawebinar.topjava.util.UserUtil;
 import ru.javawebinar.topjava.web.user.AbstractUserController;
 
 import javax.validation.Valid;
+import java.util.Locale;
 
 @Controller
 public class RootController extends AbstractUserController {
 
     @GetMapping("/")
-    public String root() {
+    public String root(Locale locale) {
         return "redirect:meals";
     }
 
@@ -30,7 +31,7 @@ public class RootController extends AbstractUserController {
     }
 
     @GetMapping(value = "/login")
-    public String login() {
+    public String login(Locale locale) {
         return "login";
     }
 
