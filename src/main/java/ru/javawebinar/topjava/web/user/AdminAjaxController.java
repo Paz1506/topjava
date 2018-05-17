@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.web.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/ajax/admin/users")
 public class AdminAjaxController extends AbstractUserController {
+
+    @Autowired
+    ExceptionInfoHandler infoHandler;
 
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -40,6 +44,9 @@ public class AdminAjaxController extends AbstractUserController {
     @PostMapping
     public void createOrUpdate(@Valid UserTo userTo, BindingResult result) {
 
+        if (result.hasErrors()){
+            infoHandler.setResult(result);
+        }
 //        10.1 Более не возвращаем ResponseEntity
 //        if (result.hasErrors()) {
 //            // TODO change to exception handler
